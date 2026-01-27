@@ -41,7 +41,12 @@ jobs:
       run: mvn test
 
     - name: Run Architecture Tests
-      run: mvn com.sogeti:archtest-maven-plugin:test
+      run: |
+        mvn com.sogeti:archtest-maven-plugin:test \
+          -DhtmlOutput=true \
+          -DhtmlOutputFile=reports/architecture-report.html \
+          -DjsonOutput=true \
+          -DjsonOutputFile=reports/architecture-report.json
 
     - name: Run Integration Tests
       run: mvn failsafe:integration-test failsafe:verify
