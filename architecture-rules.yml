@@ -1,0 +1,101 @@
+# Architecture Test Framework Configuration
+# Pattern: layered (Controller-Service-Repository)
+# Project: Layered Architecture Template
+
+pattern: "layered"
+
+basePackage: "template"
+
+# Enforcement settings
+enforcement:
+  profile: "relaxed"
+  failBuild: false
+  failOn: []
+
+# Enable cycle detection
+detectCycles: true
+
+# Layered architecture configuration
+layered:
+  # Define layers from top to bottom (presentation -> business -> data)
+  # DTOs are shared across layers so they're in a separate "model" layer at the bottom
+  layers:
+    - name: "controller"
+      packages:
+        - "template.api"  # Only the api package itself, not subpackages
+      order: 0
+      type: "open"  # Open allows accessing any lower layer
+
+    - name: "service"
+      packages:
+        - "template.service.."
+      order: 1
+      type: "open"
+
+    - name: "repository"
+      packages:
+        - "template.repository.."
+      order: 2
+      type: "open"
+
+    - name: "model"
+      packages:
+        - "template.api.model.."  # DTOs - shared by all layers
+      order: 3
+      type: "open"
+
+  # REST API validation rules
+  restApi:
+    enabled: true
+    forbiddenHttpMethods: []  # No forbidden methods
+    forbidVoidReturns: true   # ENABLED: Detect void returns
+    requireResponseEntity: false
+
+  # Entity exposure rule - entities should not be in controller layer
+  entityExposure:
+    enabled: true
+
+  # Transaction boundary - @Transactional only in service layer
+  transactionBoundary:
+    enabled: true
+    allowedLayers:
+      - "service"
+
+  # Service dependency - services should depend on interfaces
+  serviceDependency:
+    enabled: true
+    allowInterfaceDependencies: true
+
+  # Thin controller rule
+  thinController:
+    enabled: true
+    maxDependencies: 5
+    maxPublicMethods: 10
+
+  # DTO layer rule
+  dtoLayer:
+    enabled: true
+    dtoPatterns:
+      - ".*DTO$"
+      - ".*Dto$"
+      - ".*Request$"
+      - ".*Response$"
+
+# Common rules configuration
+commonRules:
+  # No field injection (constructor injection preferred)
+  fieldInjection:
+    enabled: true
+    allowedAnnotations:
+      - "lombok.Getter"
+      - "lombok.Setter"
+
+  # No business logic in controllers
+  noBusinessLogicInController:
+    enabled: true
+
+# Excludes - packages to ignore
+excludes:
+  packages:
+    - "template.config.."
+    - "template.exception.."
