@@ -34,8 +34,17 @@ jobs:
         cd architecture-test-framework
         mvn clean install -DskipTests
 
-    - name: Build & Run Architecture Tests
-      run: mvn clean verify
+    - name: Build Project
+      run: mvn clean compile
+
+    - name: Run Unit Tests
+      run: mvn test
+
+    - name: Run Architecture Tests
+      run: mvn com.sogeti:archtest-maven-plugin:test
+
+    - name: Run Integration Tests
+      run: mvn failsafe:integration-test failsafe:verify
 
     - name: Upload Architecture Report
       uses: actions/upload-artifact@v4
