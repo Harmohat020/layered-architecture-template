@@ -52,7 +52,7 @@ jobs:
       run: |
         mvn com.sogeti:archtest-maven-plugin:test \
           -DhtmlOutput=true \
-          -DhtmlOutputFile=reports/architecture-report.html \
+          -DhtmlOutputFile=reports/index.html \
           -DjsonOutput=true \
           -DjsonOutputFile=reports/architecture-report.json
 
