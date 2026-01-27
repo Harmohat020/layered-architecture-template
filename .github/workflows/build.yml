@@ -1,0 +1,50 @@
+name: Build & Architecture Test
+
+on:
+  push:
+    branches: [ master, main, test ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Demo Project
+      uses: actions/checkout@v4
+
+    - name: Checkout Architecture Test Framework
+      uses: actions/checkout@v4
+      with:
+        repository: harmohat-sogeti/architecture-test-framework
+        path: architecture-test-framework
+        ref: test
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build & Install Framework
+      run: |
+        cd architecture-test-framework
+        mvn clean install -DskipTests
+
+    - name: Build Demo Project
+      run: mvn clean compile
+
+    - name: Run Architecture Tests
+      run: mvn com.sogeti:archtest-maven-plugin:test
+
+    - name: Upload Architecture Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: architecture-report
+        path: |
+          reports/architecture-report.html
+          reports/architecture-report.json
+        retention-days: 30
