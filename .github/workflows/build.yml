@@ -20,6 +20,7 @@ jobs:
         repository: Harmohat020/architecture-test-framework
         path: architecture-test-framework
         ref: test
+        token: ${{ secrets.FRAMEWORK_PAT }}
 
     - name: Set up JDK 21
       uses: actions/setup-java@v4
