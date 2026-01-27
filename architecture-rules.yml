@@ -9,8 +9,6 @@ basePackage: "template"
 # Enforcement settings
 enforcement:
   profile: "strict"
-  failBuild: true
-  failOn: []
 
 # Enable cycle detection
 detectCycles: true
