@@ -8,8 +8,8 @@ basePackage: "template"
 
 # Enforcement settings
 enforcement:
-  profile: "relaxed"
-  failBuild: false
+  profile: "standard"
+  failBuild: true
   failOn: []
 
 # Enable cycle detection
