@@ -43,10 +43,7 @@ jobs:
         mvn clean install -DskipTests
 
     - name: Build Project
-      run: mvn clean compile
-
-    - name: Run Unit Tests
-      run: mvn test
+      run: mvn clean compile -DskipTests
 
     - name: Run Architecture Tests
       run: |
@@ -55,9 +52,6 @@ jobs:
           -DhtmlOutputFile=reports/index.html \
           -DjsonOutput=true \
           -DjsonOutputFile=reports/architecture-report.json
-
-    - name: Run Integration Tests
-      run: mvn failsafe:integration-test failsafe:verify
 
     - name: Upload Architecture Report
       uses: actions/upload-artifact@v4

@@ -29,53 +29,53 @@ public class ItemsService {
     }
 
     // Uses setters on entity (works with @Data, but violates entity-invariant-rule)
-//    public void postItem(ItemDTO itemDTO) {
-//        var item = toDomainObject(itemDTO);
-//
-//        if (item.getId() != null) {
-//            throw new ItemIdAlreadySetException(item.getId());
-//        }
-//
-//        var itemEntity = toEntity(item);
-//        var maxID = repository.findMaxID();
-//        itemEntity.setId(maxID + 1);
-//
-//        repository.save(itemEntity);
-//    }
+    public void postItem(ItemDTO itemDTO) {
+        var item = toDomainObject(itemDTO);
+
+        if (item.getId() != null) {
+            throw new ItemIdAlreadySetException(item.getId());
+        }
+
+        var itemEntity = toEntity(item);
+        var maxID = repository.findMaxID();
+        itemEntity.setId(maxID + 1);
+
+        repository.save(itemEntity);
+    }
 
     // FIX: Use builder pattern instead of setters
-     public void postItem(ItemDTO itemDTO) {
-         var item = toDomainObject(itemDTO);
-
-         if (item.getId() != null) {
-             throw new ItemIdAlreadySetException(item.getId());
-         }
-
-         var maxID = repository.findMaxID();
-         var itemEntity = ItemEntity.builder()
-                 .id(maxID + 1)
-                 .name(item.getName())
-                 .build();
-
-         repository.save(itemEntity);
-     }
+    // public void postItem(ItemDTO itemDTO) {
+    //     var item = toDomainObject(itemDTO);
+    //
+    //     if (item.getId() != null) {
+    //         throw new ItemIdAlreadySetException(item.getId());
+    //     }
+    //
+    //     var maxID = repository.findMaxID();
+    //     var itemEntity = ItemEntity.builder()
+    //             .id(maxID + 1)
+    //             .name(item.getName())
+    //             .build();
+    //
+    //     repository.save(itemEntity);
+    // }
 
     // Uses setters on entity
-//    public void putItem(Long itemId, ItemDTO itemDTO) {
-//        var item = toDomainObject(itemDTO);
-//        item.setId(itemId);
-//        repository.save(toEntity(item));
-//    }
+    public void putItem(Long itemId, ItemDTO itemDTO) {
+        var item = toDomainObject(itemDTO);
+        item.setId(itemId);
+        repository.save(toEntity(item));
+    }
 
     // FIX: Use builder pattern instead of setters
-     public void putItem(Long itemId, ItemDTO itemDTO) {
-         var item = toDomainObject(itemDTO);
-         var itemEntity = ItemEntity.builder()
-                 .id(itemId)
-                 .name(item.getName())
-                 .build();
-         repository.save(itemEntity);
-     }
+    // public void putItem(Long itemId, ItemDTO itemDTO) {
+    //     var item = toDomainObject(itemDTO);
+    //     var itemEntity = ItemEntity.builder()
+    //             .id(itemId)
+    //             .name(item.getName())
+    //             .build();
+    //     repository.save(itemEntity);
+    // }
 
     public void deleteItem(Long id) {
         repository.deleteById(id);
