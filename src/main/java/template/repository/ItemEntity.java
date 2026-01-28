@@ -28,25 +28,25 @@ public class ItemEntity {
 }
 
 // FIX: Replace @Data with @Getter + @Setter(AccessLevel.PROTECTED)
- @Entity
- @Getter
- @Setter(AccessLevel.PROTECTED)
- @Builder
- @NoArgsConstructor(access = AccessLevel.PROTECTED)
- @AllArgsConstructor
- @Table(name = "item")
- public class ItemEntity {
-
-     @Id
-     private Long id;
-
-     private String name;
-
-     // Domain method to update name with validation
-     public void updateName(String newName) {
-         if (newName == null || newName.isBlank()) {
-             throw new IllegalArgumentException("Name cannot be empty");
-         }
-         this.name = newName;
-     }
- }
+// @Entity
+// @Getter
+// @Setter(AccessLevel.PROTECTED)
+// @Builder
+// @NoArgsConstructor(access = AccessLevel.PROTECTED)
+// @AllArgsConstructor
+// @Table(name = "item")
+// public class ItemEntityFixed {
+//
+//     @Id
+//     private Long id;
+//
+//     private String name;
+//
+//     // Domain method to update name with validation
+//     public void updateName(String newName) {
+//         if (newName == null || newName.isBlank()) {
+//             throw new IllegalArgumentException("Name cannot be empty");
+//         }
+//         this.name = newName;
+//     }
+// }
