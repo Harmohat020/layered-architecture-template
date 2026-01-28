@@ -2,9 +2,6 @@
 # Pattern: layered (Controller-Service-Repository)
 # Project: Layered Architecture Template
 
-# INVALID YAML SYNTAX TEST
-invalid: yaml: syntax: error:
-
 pattern: "layered"
 
 basePackage: "template"
