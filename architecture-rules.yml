@@ -8,7 +8,7 @@ basePackage: "template"
 
 # Enforcement settings
 enforcement:
-  profile: "relaxed"
+  profile: "strict"
 
 # Enable cycle detection
 detectCycles: true
